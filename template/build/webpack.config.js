@@ -1,9 +1,10 @@
 const debug = require('debug')('app:webpack.config')
 const webpack = require('webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const path = require('path')
 
 const ROOT_PATH = path.resolve(__dirname, '..')
-const PROJECT_NAME = process.env.PROJECT_NAME || {{ name }}
+const PROJECT_NAME = process.env.PROJECT_NAME || '{{ name }}'
 
 const publicPath = '/static'
 const filename = '[name].js'
@@ -26,7 +27,7 @@ const {{ name }}Config = {
     port: process.env.PORT || 8080,
     publicPath: publicPath,
     contentBase: path.join(ROOT_PATH, 'src'),
-    historyApiFallBack: true,
+    historyApiFallback: true,
     stats: 'normal',
   },
   module: {
@@ -47,6 +48,11 @@ const {{ name }}Config = {
     }],
   },
   plugins: [
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      template: path.join(ROOT_PATH, 'src', 'index.html'),
+      inject: 'body',
+    })
   ],
   resolve: {
     extensions: ['.js', '.vue', '.json'],
