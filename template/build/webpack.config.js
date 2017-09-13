@@ -3,6 +3,7 @@ const webpack = require('webpack')
 const path = require('path')
 
 const ROOT_PATH = path.resolve(__dirname, '..')
+const PROJECT_NAME = process.env.PROJECT_NAME || {{ name }}
 
 const publicPath = '/static'
 const filename = '[name].js'
@@ -16,7 +17,7 @@ const {{ name }}Config = {
   },
   output: {
     path: path.join(ROOT_PATH, 'dist'),
-    publicPath: publicPath
+    publicPath: publicPath,
     filename: '[name].js',
   },
   devServer: {
@@ -32,6 +33,17 @@ const {{ name }}Config = {
     loaders: [{
       test: /\.vue$/,
       loader: 'vue-loader',
+    }, {
+      test: /\.js$/,
+      loader: 'babel-loader',
+      options: {
+        presets: ['es2015', 'stage-0'],
+        plugins: ['transform-runtime'],
+      },
+      exclude: /node_modules/,
+    }, {
+      test: /\.(png|jpg|gif|svg)$/,
+      loader: 'file-loader',
     }],
   },
   plugins: [
