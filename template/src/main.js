@@ -1,7 +1,10 @@
 import Vue from 'vue'
 import App from './App.vue'
 
-new Vue({
-  el: '#app',
-  render: h => h(App)
-})
+export function createApp(ssrContext) {
+  const app = new Vue({
+    ssrContext,
+    render: h => h(App),
+  })
+  return { app }
+}
