@@ -1,11 +1,15 @@
 const debug = require('debug')('app:webpack.config')
 const webpack = require('webpack')
+const webpackMerge = require('webpack-merge')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const path = require('path')
 
+const VueSSRServerPlugin = require('vue-server-renderer/server-plugin'); //vue服务端渲染插件
+const VueSSRClientPlugin = require('vue-server-renderer/client-plugin') // client manifest preload
 const ROOT_PATH = path.resolve(__dirname, '..')
 const PROJECT_NAME = process.env.PROJECT_NAME || '{{ name }}'
 const NODE_ENV = process.env.NODE_ENV || 'local'
+const SERVER_RENDER = process.env.SERVER_RENDER || false
 
 const publicPath = '/'
 const filename = '[name].js'
@@ -13,8 +17,9 @@ const filename = '[name].js'
 debug(`Webpack running environment [${NODE_ENV}]`)
 debug(`Webpack running client folder [${ROOT_PATH}]`)
 debug(`Webpack running project name [${PROJECT_NAME}]`)
+debug(`Webpack running server render [${SERVER_RENDER}]`)
 
-const {{ name }}Config = {
+const baseConfig = {
   devtool: '#cheap-module-eval-source-map',
   context: ROOT_PATH,
   entry: {
@@ -51,11 +56,6 @@ const {{ name }}Config = {
     }],
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: path.join(ROOT_PATH, 'src', 'index.html'),
-      inject: 'body',
-    })
   ],
   resolve: {
     extensions: ['.js', '.vue', '.json'],
@@ -66,4 +66,34 @@ const {{ name }}Config = {
   }
 }
 
-module.exports = {{ name }}Config
+const clientConfig = webpackMerge(baseConfig, {
+  plugins: [
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      template: path.join(ROOT_PATH, 'src', 'index.html'),
+      inject: 'body',
+    }),
+    new VueSSRClientPlugin({
+      filename: `${PROJECT_NAME}.client.1.json`,
+    })
+  ],
+})
+
+const serverConfig = webpackMerge(baseConfig, {
+  plugins: [
+    new HtmlWebpackPlugin({
+      filename: '{{ name }}.template.html',
+      template: path.join(ROOT_PATH, 'src', 'index.html'),
+      inject: false,
+    }),
+    new VueSSRServerPlugin({
+      filename: `${PROJECT_NAME}.server.1.json`,
+    }),
+  ],
+})
+
+if (SERVER_RENDER) {
+  module.exports = [clientConfig, serverConfig]
+} else {
+  module.exports = clientConfig
+}
