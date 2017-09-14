@@ -5,7 +5,7 @@
   "author": "{{ author }}",
   "private": true,
   "scripts": {
-    "start": "cross-env DEBUG=app:* NODE_ENV=local webpack-dev-server --config ./build/webpack.config.js --colors -p --hot",
+    "start": "cross-env DEBUG='app:*' NODE_ENV='local' ./node_module/.bin/webpack-dev-server --config ./build/webpack.config.js --colors -p --hot",
     "start:server": "cross-env DEBUG=app.* NODE_ENV=local nodemon server.js -c ./build/webpack.config.js --watch ./lib",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },

@@ -7,7 +7,7 @@ const ROOT_PATH = path.resolve(__dirname, '..')
 const PROJECT_NAME = process.env.PROJECT_NAME || '{{ name }}'
 const NODE_ENV = process.env.NODE_ENV || 'local'
 
-const publicPath = '/static/'
+const publicPath = '/'
 const filename = '[name].js'
 
 debug(`Webpack running environment [${NODE_ENV}]`)
@@ -29,7 +29,6 @@ const {{ name }}Config = {
     disableHostCheck: true,
     host: '127.0.0.1',
     port: process.env.PORT || 8080,
-    publicPath: publicPath,
     contentBase: path.join(ROOT_PATH, 'src'),
     historyApiFallback: true,
     stats: 'normal',
