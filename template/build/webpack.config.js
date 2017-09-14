@@ -5,6 +5,7 @@ const path = require('path')
 
 const ROOT_PATH = path.resolve(__dirname, '..')
 const PROJECT_NAME = process.env.PROJECT_NAME || '{{ name }}'
+const NODE_ENV = process.env.NODE_ENV || 'local'
 
 const publicPath = '/static/'
 const filename = '[name].js'
