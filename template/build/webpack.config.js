@@ -80,6 +80,10 @@ const clientConfig = webpackMerge(baseConfig, {
 })
 
 const serverConfig = webpackMerge(baseConfig, {
+  target: 'node',
+  output: {
+    libraryTarget: 'commonjs2'
+  },
   plugins: [
     new HtmlWebpackPlugin({
       filename: '{{ name }}.template.html',

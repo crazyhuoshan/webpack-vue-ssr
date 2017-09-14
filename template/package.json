@@ -5,9 +5,8 @@
   "author": "{{ author }}",
   "private": true,
   "scripts": {
-    "start": "cross-env DEBUG='app:*' NODE_ENV='local' ./node_module/.bin/webpack-dev-server --config ./build/webpack.config.js --colors -p --hot",
-    "start:server": "cross-env DEBUG=app.* NODE_ENV=local nodemon server.js -c ./build/webpack.config.js --watch ./lib",
-    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
+    "start": "env DEBUG='app:*' NODE_ENV='local' ./node_module/.bin/webpack-dev-server --config ./build/webpack.config.js --colors -p --hot",
+    "start:server": "env DEBUG=app.* NODE_ENV=local SERVER_RENDER=true nodemon server.js -c ./build/webpack.config.js --watch ./lib"
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
