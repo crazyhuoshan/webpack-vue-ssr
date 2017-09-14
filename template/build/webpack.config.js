@@ -6,9 +6,12 @@ const path = require('path')
 const ROOT_PATH = path.resolve(__dirname, '..')
 const PROJECT_NAME = process.env.PROJECT_NAME || '{{ name }}'
 
-const publicPath = '/static'
+const publicPath = '/static/'
 const filename = '[name].js'
 
+debug(`Webpack running environment [${NODE_ENV}]`)
+debug(`Webpack running client folder [${ROOT_PATH}]`)
+debug(`Webpack running project name [${PROJECT_NAME}]`)
 
 const {{ name }}Config = {
   devtool: '#cheap-module-eval-source-map',
