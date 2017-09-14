@@ -89,8 +89,8 @@ function createApp({
     template: htmlTemplate,
   })
 
-  router.get(`/${staticPath}/*`, async ctx => {
-    ctx.body = fs.readFileSync(path.join(outputPath, ctx.path.replace(`/${staticPath}`, '')))
+  router.get(`${staticPath}*`, async ctx => {
+    ctx.body = fs.readFileSync(path.join(outputPath, ctx.path.replace(`${staticPath}`, '')))
   })
 
 
