@@ -74,6 +74,11 @@ const clientConfig = webpackMerge(baseConfig, {
       template: path.join(ROOT_PATH, 'src', 'index.html'),
       inject: 'body',
     }),
+    new HtmlWebpackPlugin({
+      filename: '{{ name }}.template.html',
+      template: path.join(ROOT_PATH, 'src', 'index.html'),
+      inject: false,
+    }),
     new VueSSRClientPlugin({
       filename: `${PROJECT_NAME}.client.1.json`,
     })
@@ -89,11 +94,6 @@ const serverConfig = webpackMerge(baseConfig, {
     libraryTarget: 'commonjs2'
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      filename: '{{ name }}.template.html',
-      template: path.join(ROOT_PATH, 'src', 'index.html'),
-      inject: false,
-    }),
     new VueSSRServerPlugin({
       filename: `${PROJECT_NAME}.server.1.json`,
     }),

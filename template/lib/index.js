@@ -53,7 +53,6 @@ compiler.run((err, stats) => {
   }))
 
 
-
   const serverBundleJson = JSON.parse(fs.readFileSync(path.join(wc.output.path, config.serverBundleFilename)).toString())
   const clientManifestJson = JSON.parse(fs.readFileSync(path.join(wc.output.path, config.clientManifestFilename)).toString())
   const htmlTemplate = fs.readFileSync(path.join(wc.output.path, config.htmlTemplateFilename)).toString()
