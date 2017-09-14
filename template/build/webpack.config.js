@@ -11,7 +11,8 @@ const PROJECT_NAME = process.env.PROJECT_NAME || '{{ name }}'
 const NODE_ENV = process.env.NODE_ENV || 'local'
 const SERVER_RENDER = process.env.SERVER_RENDER || false
 
-const publicPath = '/'
+// for html webpack plugin not working with webpack-dev-server
+const publicPath = SERVER_RENDER ? '/static/' : '/'
 const filename = '[name].js'
 
 debug(`Webpack running environment [${NODE_ENV}]`)
@@ -22,9 +23,6 @@ debug(`Webpack running server render [${SERVER_RENDER}]`)
 const baseConfig = {
   devtool: '#cheap-module-eval-source-map',
   context: ROOT_PATH,
-  entry: {
-    [PROJECT_NAME]: path.join(ROOT_PATH, 'src', 'entry-client'),
-  },
   output: {
     path: path.join(ROOT_PATH, 'dist'),
     publicPath: publicPath,
@@ -67,6 +65,9 @@ const baseConfig = {
 }
 
 const clientConfig = webpackMerge(baseConfig, {
+  entry: {
+    [PROJECT_NAME]: path.join(ROOT_PATH, 'src', 'entry-client'),
+  },
   plugins: [
     new HtmlWebpackPlugin({
       filename: 'index.html',
@@ -81,6 +82,9 @@ const clientConfig = webpackMerge(baseConfig, {
 
 const serverConfig = webpackMerge(baseConfig, {
   target: 'node',
+  entry: {
+    [PROJECT_NAME]: path.join(ROOT_PATH, 'src', 'entry-server'),
+  },
   output: {
     libraryTarget: 'commonjs2'
   },

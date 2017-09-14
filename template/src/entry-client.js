@@ -2,4 +2,8 @@ import { createApp } from './main'
 
 const { app } = createApp()
 
-app.$mount('#app')
+if (document.getElementById('app')) {
+  app.$mount('#app')
+} else {
+  app.$mount('#app-client')
+}
