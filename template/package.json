@@ -10,7 +10,12 @@
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
-    "vue": "^2.3.3"
+    "babel-polyfill": "^6.26.0",
+    "koa": "^2.3.0",
+    "koa-router": "^7.2.1",
+    "vue": "^2.3.3",
+    "vue-server-renderer": "^2.4.3",
+    "webpack-merge": "^4.1.0"
   },
   "devDependencies": {
     "babel-core": "^6.0.0",
